@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -46,6 +48,7 @@ class ProfileViewModel : ViewModel() {
 @Composable
 fun ProfileScreen(
     onLogout: () -> Unit = {},
+    onNavigateToSettings: () -> Unit = {},
     viewModel: ProfileViewModel = viewModel()
 ) {
     val userState by viewModel.user.collectAsState()
@@ -111,8 +114,24 @@ fun ProfileScreen(
                 }
             }
             Spacer(modifier = Modifier.height(24.dp))
+            OutlinedButton(
+                onClick = onNavigateToSettings,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = "Settings",
+                    tint = NewDawnDarkText
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Settings", color = NewDawnDarkText, fontWeight = FontWeight.Medium)
+            }
+            Spacer(modifier = Modifier.height(12.dp))
             Button(
                 onClick = onLogout,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = NewDawnGreen)
             ) {
                 Text("Logout", fontWeight = FontWeight.Bold)

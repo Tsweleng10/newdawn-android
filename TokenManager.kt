@@ -16,6 +16,7 @@ object TokenManager {
     private val USER_NAME_KEY = stringPreferencesKey("user_name")
     private val USER_EMAIL_KEY = stringPreferencesKey("user_email")
     private val USER_ID_KEY = stringPreferencesKey("user_id")
+    private val THEME_KEY = stringPreferencesKey("theme_mode")  // "light", "dark", "system"
 
     private lateinit var appContext: Context
 
@@ -63,4 +64,23 @@ object TokenManager {
     }
 
     fun isLoggedIn(): Boolean = getToken() != null
+
+    // ---------- THEME ----------
+    suspend fun saveThemeMode(mode: String) {
+        appContext.dataStore.edit { prefs ->
+            prefs[THEME_KEY] = mode
+        }
+    }
+
+    suspend fun getThemeMode(): String {
+        return appContext.dataStore.data.first()[THEME_KEY] ?: "system"
+    }
+
+    fun getThemeModeBlocking(): String = runBlocking {
+        try {
+            appContext.dataStore.data.first()[THEME_KEY] ?: "system"
+        } catch (e: Exception) {
+            "system"
+        }
+    }
 }
