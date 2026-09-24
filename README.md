@@ -110,10 +110,6 @@ The Android app **never** talks to the database directly. Every request goes thr
 
 ---
 
-The Android app **never** talks to the database directly. Every request goes through the REST API, which validates input, checks the JWT token, and runs SQL queries.
-
----
-
 ## 📸 Screenshots
 
 | Splash | Login | Register | Home |
