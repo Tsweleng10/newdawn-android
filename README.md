@@ -22,5 +22,5 @@ https://newdawn-api-production.up.railway.app/
 
 ## Team
 - Lead: Joshua Tsweleng (st10451745)
-- Fortune Lemekwane
-- Phuti Magwai
+- Fortune Lemekwane 
+- Phuti Magwai (St10452585)
