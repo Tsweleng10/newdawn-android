@@ -83,6 +83,33 @@ Users are **not locked** into a single role — every user can post work *and* f
 
 ---
 
+## 🏗 Architecture
+
+```text
+┌───────────────────────────────────────────────────────┐
+│                      Android App                      │
+│  ┌──────────────┐  ┌──────────────┐  ┌────────────┐   │
+│  │  Compose UI  │→ │  ViewModels  │→ │ Repository │   │
+│  └──────────────┘  └──────────────┘  └─────┬──────┘   │
+└────────────────────────────────────────────┼──────────┘
+                                             │ Retrofit
+                                             │ HTTP + JWT
+                                             │
+┌────────────────────────────────────────────▼──────────┐
+│                    Node.js REST API                   │
+│  Routes → Middleware (JWT) → Handlers → pg (SQL)      │
+└────────────────────────────────────────────┬──────────┘
+                                             │
+                                    ┌────────▼────────┐
+                                    │   PostgreSQL    │
+                                    │     (Neon)      │
+                                    └─────────────────┘
+```
+
+The Android app **never** talks to the database directly. Every request goes through the REST API, which validates input, checks the JWT token, and runs SQL queries.
+
+---
+
 The Android app **never** talks to the database directly. Every request goes through the REST API, which validates input, checks the JWT token, and runs SQL queries.
 
 ---
