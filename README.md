@@ -18,7 +18,6 @@ NewDawn is an Android application that connects people who need short-term, info
 - [Features](#-features)
 - [Tech Stack](#-tech-stack)
 - [Architecture](#-architecture)
-- [Screenshots](#-screenshots)
 - [Demo Video](#-demo-video)
 - [Getting Started](#-getting-started)
 - [API Reference](#-api-reference)
@@ -26,7 +25,6 @@ NewDawn is an Android application that connects people who need short-term, info
 - [GitHub Actions](#-github-actions)
 - [Testing](#-testing)
 - [Team](#-team)
-- [AI Usage Disclosure](#-ai-usage-disclosure)
 - [References](#-references)
 
 ---
