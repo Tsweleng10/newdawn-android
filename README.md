@@ -110,37 +110,16 @@ The Android app **never** talks to the database directly. Every request goes thr
 
 ---
 
-## 📸 Screenshots
-
-| Splash | Login | Register | Home |
-|---|---|---|---|
-| ![Splash](docs/splash.png) | ![Login](docs/login.png) | ![Register](docs/register.png) | ![Home](docs/home.png) |
-
-| Find Work | Job Details | Submit Offer | View Offers |
-|---|---|---|---|
-| ![Find](docs/findwork.png) | ![Details](docs/jobdetails.png) | ![Offer](docs/submitoffer.png) | ![Offers](docs/viewoffers.png) |
-
-| My Jobs | Profile | Settings | Notifications |
-|---|---|---|---|
-| ![MyJobs](docs/myjobs.png) | ![Profile](docs/profile.png) | ![Settings](docs/settings.png) | ![Notif](docs/notifications.png) |
-
-*(Add screenshots to a `docs/` folder in the repo. Rename or remove rows you haven't captured yet.)*
-
----
-
 ## 🎥 Demo Video
 
-**▶️ [Watch the full demo on YouTube](https://youtu.be/REPLACE_WITH_YOUR_VIDEO_ID)**
+**▶️ [Watch the full demo on YouTube](https://youtu.be/6jjQ2usDOQw?si=nMRI0pVkNWdOkHuh)**
 
 The video demonstrates:
-1. Registration with password encryption proof (bcrypt hash in the DB)
+1. Registration 
 2. Login and session persistence
 3. Posting a job
 4. Browsing and searching for jobs
 5. Submitting an offer as a worker
-6. Viewing and accepting offers as a poster
-7. Settings menu (language, notifications, password change)
-8. GitHub Actions passing on a clean machine
 
 ---
 
