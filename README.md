@@ -119,8 +119,6 @@ The video demonstrates:
 4. Browsing and searching for jobs
 5. Submitting an offer as a worker
 
----
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -134,3 +132,198 @@ The video demonstrates:
 ```bash
 git clone https://github.com/Tsweleng10/newdawn-android.git
 cd newdawn-android
+```
+
+1. Open the project in Android Studio
+2. Wait for Gradle sync
+3. Connect a physical Android device (USB debugging enabled)
+4. Click Run ▶
+
+The app automatically connects to the live API at:
+`https://newdawn-api-production.up.railway.app/`
+
+### Test Account
+
+Register your own account in the app. Or use the demo credentials:
+
+```
+Email: demo@newdawn.com
+Password: demo1234
+```
+
+---
+
+## 📡 API Reference
+
+Base URL: `https://newdawn-api-production.up.railway.app/`
+
+### Authentication
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/auth/register` | Register new user |
+| POST | `/api/auth/login` | Login and receive JWT |
+| GET | `/api/auth/me` | Get current user |
+| PUT | `/api/auth/settings` | Update language/notifications |
+| PUT | `/api/auth/change-password` | Change password |
+
+### Jobs
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/jobs` | List open jobs (`?search=`, `?category=`, `?location=`) |
+| GET | `/api/jobs/my` | List my posted jobs |
+| GET | `/api/jobs/{id}` | Get single job |
+| POST | `/api/jobs` | Create a job |
+| PUT | `/api/jobs/{id}/status` | Update job status |
+
+### Offers
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/offers/job/{jobId}` | Submit an offer |
+| GET | `/api/offers/job/{jobId}` | View offers for my job |
+| GET | `/api/offers/my` | View offers I submitted |
+| PUT | `/api/offers/{id}/accept` | Accept an offer |
+
+Authenticated endpoints require the header:
+
+```text
+Authorization: Bearer <jwt_token>
+```
+
+**Register example**
+
+```http
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "full_name": "Sarah Lekoane",
+  "email": "sarah@example.com",
+  "password": "test1234",
+  "location": "Soweto"
+}
+```
+
+**Response**
+
+```json
+{
+  "user": {
+    "id": 1,
+    "full_name": "Sarah Lekoane",
+    "email": "sarah@example.com",
+    "location": "Soweto"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+---
+
+## 🌿 GitHub Workflow
+
+We used a feature-branch + Pull Request workflow:
+
+1. Each feature was developed on its own branch (`feature/auth`, `feature/jobs`, `feature/offers-settings`)
+2. When complete, the developer opened a Pull Request
+3. Another team member reviewed the changes
+4. The PR was merged into `master` only after review
+
+This is visible in the Pull Requests tab of this repository.
+
+---
+
+## ⚙️ GitHub Actions
+
+Automated CI is configured in `.github/workflows/build.yml`. On every push to `master` or any `feature/*` branch, GitHub Actions:
+
+1. Checks out the code
+2. Sets up JDK 17
+3. Grants execute permission to `gradlew`
+4. Runs `./gradlew build` — compiles the app
+5. Runs `./gradlew testDebugUnitTest` — executes unit tests
+
+Status: `https://github.com/Tsweleng10/newdawn-android/actions/workflows/build.yml/badge.svg`
+
+A green badge proves the code compiles and passes tests on a clean machine — not just on the developer's laptop.
+
+---
+
+## 🧪 Testing
+
+### Unit Tests
+
+Located in `app/src/test/java/com/example/newdawn/`. Run with:
+
+```bash
+./gradlew testDebugUnitTest
+```
+
+### Instrumented Tests
+
+Located in `app/src/androidTest/java/com/example/newdawn/`. Run on a device with:
+
+```bash
+./gradlew connectedAndroidTest
+```
+
+### Manual Test Checklist
+
+- ☑ Register with valid data → success
+- ☑ Register with empty fields → validation error, no crash
+- ☑ Register with mismatched passwords → validation error
+- ☑ Register with existing email → API 409 displayed
+- ☑ Login with correct credentials → success
+- ☑ Login with wrong password → "Invalid email or password"
+- ☑ Session persists after closing and reopening
+- ☑ Post a job with all fields → appears in Recommended Jobs
+- ☑ Post a job with empty fields → validation error
+- ☑ Search jobs by keyword → filtered results
+- ☑ Search with no results → friendly empty state
+- ☑ Submit an offer → appears in Offers Received
+- ☑ Submit duplicate offer → 409 error displayed
+- ☑ Accept offer → job status changes to ACTIVE
+- ☑ Change password → old password validated
+- ☑ Logout → token cleared, redirected to Login
+
+---
+
+## 👥 Team
+
+| Name | Student Number | Role |
+|---|---|---|
+| Joshua Tsweleng | st10451745 | Lead — Backend, Integration, Person 4 (Offers & Settings) |
+| Fortune Lemekwana | st10450241 | Person 3 — Jobs & Home |
+| Phuti Magwai | st10452585 | Person 2 — Authentication & Profile |
+
+---
+
+## 🤖 AI Usage Disclosure
+
+In accordance with the OPSC6312 assessment requirements, this project used AI tools as follows:
+
+**Tools used:** DeepSeek (code generation, debugging, architecture), ChatGPT (debugging), DALL·E (placeholder assets).
+
+**How AI was used:**
+- **Backend scaffolding** — initial Express.js folder structure and route templates were drafted with AI assistance, then manually reviewed, tested with Postman, and adapted to our PostgreSQL schema.
+- **Android setup** — the Retrofit configuration, DataStore wrapper, and ViewModel patterns were informed by AI-generated examples. We corrected them to match our specific API contract (e.g. `full_name` vs `fullName`, `/api/auth/me` vs `/api/auth/profile`, server-side bcrypt vs client-side SHA-256).
+- **Debugging** — during merges, AI helped diagnose issues like missing `INTERNET` permission in `AndroidManifest.xml`, unresolved references after branch merges, and package name conflicts from teammate branches.
+- **Documentation** — this README was structured with AI assistance; content and technical decisions are our own.
+
+**What we did NOT do:** We did not submit code we could not explain. We did not use AI to write the Section A/B research reports. Every AI-suggested snippet was tested by running the app against the live API on a physical device.
+
+---
+
+## 📚 References
+
+- Android Developers. (2024). *Jetpack Compose Documentation*. https://developer.android.com/jetpack/compose
+- Android Developers. (2024). *Guide to App Architecture*. https://developer.android.com/topic/architecture
+- GitHub. (2024). *Automated Build Android App with GitHub Actions*. https://github.com/marketplace/actions/automated-build-android-app-with-github-action
+- Neon. (2024). *Serverless PostgreSQL*. https://neon.tech/docs
+- Node.js Foundation. (2024). *Node.js Documentation*. https://nodejs.org/docs
+- OpenJS Foundation. (2024). *Express.js Documentation*. https://expressjs.com
+- Railway. (2024). *Deploy Node.js Apps*. https://docs.railway.app
+- Square Inc. (2024). *Retrofit*. https://square.github.io/retrofit
+- Android Developers. (2024). *DataStore*. https://developer.android.com/topic/libraries/architecture/datastore
